@@ -6,30 +6,34 @@ st.set_page_config(
     layout="wide"
 )
 
-# 🎨 CSS로 폰트와 색상 스타일링
+# 🎨 CSS: 폰트 크기 확대 + 폰트 스타일 적용
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+    
     html, body, [class*="css"] {
         font-family: 'Jua', sans-serif;
+        font-size: 20px !important;
         background-color: #fff8fc;
     }
+
     .job-card {
         background-color: #ffe4f0;
-        padding: 15px;
-        border-radius: 15px;
-        margin-bottom: 10px;
-        font-size:18px;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        font-size: 22px;
         box-shadow: 2px 2px 5px #ccc;
         cursor: pointer;
     }
+
     .job-card:hover {
         background-color: #ffd6ec;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 직업 데이터
+# 직업 정보
 job_details = {
     "📷 사진작가": {
         "설명": "세상의 아름다운 순간을 사진으로 담는 예술가예요!",
@@ -51,14 +55,13 @@ job_details = {
         "관련학과": "시각디자인과, 산업디자인과",
         "추천대학": "홍익대학교, 국민대학교, 서울과학기술대학교"
     },
-    # 필요한 만큼 추가 가능
 }
 
 # MBTI 선택
 st.title("💫 MBTI로 알아보는 나의 미래 직업")
 mbti_selected = st.selectbox("🧠 당신의 MBTI를 선택하세요!", ["ISFP", "ENFP", "INFP", "ESFP"])
 
-# MBTI별 직업 (예시: ISFP)
+# MBTI별 직업 리스트
 mbti_jobs = {
     "ISFP": ["📷 사진작가", "🎨 디자이너"],
     "ENFP": ["🎭 배우", "🎨 디자이너"],
@@ -66,12 +69,11 @@ mbti_jobs = {
     "ESFP": ["🎭 배우", "📷 사진작가"]
 }
 
-# 직업 리스트 출력
+# 직업 출력
 st.subheader(f"🌟 [{mbti_selected}]에게 어울리는 직업 리스트")
 cols = st.columns(2)
 for i, job in enumerate(mbti_jobs[mbti_selected]):
     with cols[i % 2]:
-        # 클릭 감지
         if st.button(job, key=job):
             with st.expander(f"🔍 {job}에 대해 알아보기!", expanded=True):
                 st.write(f"📌 **설명**: {job_details[job]['설명']}")
