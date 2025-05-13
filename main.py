@@ -1,45 +1,79 @@
 import streamlit as st
 
-# 🎨 페이지 기본 설정
 st.set_page_config(
-    page_title="MBTI 진로 추천 🎯",
-    page_icon="✨",
-    layout="wide",
+    page_title="MBTI 진로 탐험🌟",
+    page_icon="🌈",
+    layout="wide"
 )
 
-# 🎆 타이틀
-st.markdown("<h1 style='text-align: center; color: #FF69B4;'>💫 MBTI로 알아보는 ✨ 나의 미래 직업 💼</h1>", unsafe_allow_html=True)
-st.markdown("### 🌈 아래에서 자신의 MBTI를 선택하면, 잘 어울리는 직업을 추천해드려요!")
+# 🎨 CSS로 폰트와 색상 스타일링
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+    html, body, [class*="css"] {
+        font-family: 'Jua', sans-serif;
+        background-color: #fff8fc;
+    }
+    .job-card {
+        background-color: #ffe4f0;
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        font-size:18px;
+        box-shadow: 2px 2px 5px #ccc;
+        cursor: pointer;
+    }
+    .job-card:hover {
+        background-color: #ffd6ec;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
-# 🧠 MBTI 직업 추천 데이터
-mbti_jobs = {
-    "INTJ": ["🔬 과학자", "💻 데이터 과학자", "🧠 전략 컨설턴트"],
-    "INTP": ["🧪 연구원", "💡 발명가", "👨‍💻 소프트웨어 개발자"],
-    "ENTJ": ["💼 CEO", "📊 경영 컨설턴트", "⚖️ 법률가"],
-    "ENTP": ["🎙️ 방송인", "💭 스타트업 창업자", "🧑‍🚀 혁신가"],
-    "INFJ": ["📚 작가", "🎨 예술가", "🤝 심리상담사"],
-    "INFP": ["✍️ 시인", "🎼 작곡가", "🌍 NGO 활동가"],
-    "ENFJ": ["👨‍🏫 선생님", "🎤 연설가", "💖 코치"],
-    "ENFP": ["🌟 배우", "📚 콘텐츠 크리에이터", "🧳 여행 블로거"],
-    "ISTJ": ["📊 회계사", "🏛️ 공무원", "🔧 기술자"],
-    "ISFJ": ["👩‍⚕️ 간호사", "📦 사서", "👩‍🍳 제과제빵사"],
-    "ESTJ": ["📈 관리자", "🏦 은행원", "👨‍✈️ 군인"],
-    "ESFJ": ["💬 상담사", "🧑‍🏫 교사", "🎉 이벤트 플래너"],
-    "ISTP": ["🔧 정비사", "🚘 자동차 디자이너", "🛠️ 기계 엔지니어"],
-    "ISFP": ["📷 사진작가", "🎨 디자이너", "🎵 음악가"],
-    "ESTP": ["💰 영업사원", "🛍️ 마케팅 전문가", "🎮 게임 스트리머"],
-    "ESFP": ["🎭 배우", "🕺 엔터테이너", "🎤 가수"],
+# 직업 데이터
+job_details = {
+    "📷 사진작가": {
+        "설명": "세상의 아름다운 순간을 사진으로 담는 예술가예요!",
+        "관련학과": "사진영상학과, 디자인학부",
+        "추천대학": "서울예대, 중앙대학교, 계원예대"
+    },
+    "🎭 배우": {
+        "설명": "연기와 표현으로 사람들에게 감동을 주는 예술가예요!",
+        "관련학과": "연극영화과, 공연예술학부",
+        "추천대학": "한국예술종합학교, 동국대학교, 중앙대학교"
+    },
+    "👩‍🏫 선생님": {
+        "설명": "아이들을 가르치고 함께 성장하는 교육 전문가예요!",
+        "관련학과": "초등교육과, 유아교육과",
+        "추천대학": "공주교육대학교, 진주교대, 이화여자대학교"
+    },
+    "🎨 디자이너": {
+        "설명": "멋지고 창의적인 아이디어로 세상을 꾸미는 사람!",
+        "관련학과": "시각디자인과, 산업디자인과",
+        "추천대학": "홍익대학교, 국민대학교, 서울과학기술대학교"
+    },
+    # 필요한 만큼 추가 가능
 }
 
-# 🎯 사용자 MBTI 선택
-mbti_list = list(mbti_jobs.keys())
-selected_mbti = st.selectbox("👉 당신의 MBTI를 선택하세요!", mbti_list)
+# MBTI 선택
+st.title("💫 MBTI로 알아보는 나의 미래 직업")
+mbti_selected = st.selectbox("🧠 당신의 MBTI를 선택하세요!", ["ISFP", "ENFP", "INFP", "ESFP"])
 
-# 💫 추천 결과
-if selected_mbti:
-    st.markdown(f"### 🧭 <span style='color:#4B0082'>[{selected_mbti}]</span> 유형에게 어울리는 직업은?", unsafe_allow_html=True)
-    st.success("🌟 " + " | ".join(mbti_jobs[selected_mbti]))
+# MBTI별 직업 (예시: ISFP)
+mbti_jobs = {
+    "ISFP": ["📷 사진작가", "🎨 디자이너"],
+    "ENFP": ["🎭 배우", "🎨 디자이너"],
+    "INFP": ["🎭 배우", "👩‍🏫 선생님"],
+    "ESFP": ["🎭 배우", "📷 사진작가"]
+}
 
-# 🌈 푸터
-st.markdown("---")
-st.markdown("<p style='text-align:center; color:gray;'>✨ 만든이: 당신의 진로를 응원하는 AI ✨</p>", unsafe_allow_html=True)
+# 직업 리스트 출력
+st.subheader(f"🌟 [{mbti_selected}]에게 어울리는 직업 리스트")
+cols = st.columns(2)
+for i, job in enumerate(mbti_jobs[mbti_selected]):
+    with cols[i % 2]:
+        # 클릭 감지
+        if st.button(job, key=job):
+            with st.expander(f"🔍 {job}에 대해 알아보기!", expanded=True):
+                st.write(f"📌 **설명**: {job_details[job]['설명']}")
+                st.write(f"🎓 **관련 학과**: {job_details[job]['관련학과']}")
+                st.write(f"🏫 **추천 대학**: {job_details[job]['추천대학']}")
